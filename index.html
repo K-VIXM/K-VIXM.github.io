@@ -5,7 +5,286 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VIXM - 꿈을 잇는 버티포트 데이터 표준</title>
   <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIXM - Vertiport Information Exchange Model</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root { --slate-950: #0b0f19; }
+    body { background-color: var(--slate-950); color: #f1f5f9; overflow-x: hidden; font-family: sans-serif; }
+
+    .scrolly-container { position: relative; width: 100%; }
+
+    /* 고정된 배경 이미지 영역 */
+    .sticky-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background-size: cover; background-position: center;
+      z-index: 0; will-change: opacity, transform;
+      transition: opacity 0.5s ease-out;
+    }
+    
+    /* 실제 동작하는 고화질 웹 이미지 직결 */
+    /* 1. 상공/창밖 뷰 (UAM의 꿈) */
+    #bg-interior {
+      background-image: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), url('https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1920&q=80');
+      opacity: 1;
+    }
+    /* 2. 도심 버티포트 및 미래 빌딩 숲 올려다보기 (미래 & VIXM) */
+    #bg-lookup {
+      background-image: linear-gradient(rgba(11, 15, 25, 0.6), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80');
+      opacity: 0;
+    }
+
+    /* 스크롤에 따라 나타날 컨텐츠 텍스트 */
+    .scroll-content {
+      position: relative; width: 100%; height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 0 1.5rem; z-index: 10;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .scroll-content.active { opacity: 1; transform: translateY(0); }
+
+    /* 데이터/스키마 정상 섹션 */
+    .normal-section { position: relative; background-color: var(--slate-950); z-index: 20; width: 100%; }
+  </style>
+</head>
+<body class="selection:bg-cyan-500 selection:text-white">
+
+  <!-- Header / Navigation -->
+  <header class="border-b border-slate-800/80 fixed top-0 left-0 w-full bg-[#0b0f19]/80 backdrop-blur z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded bg-cyan-500 flex items-center justify-center font-bold text-slate-950">V</div>
+        <span class="text-xl font-bold tracking-tight text-white">VIXM<span class="text-cyan-400">.aero</span></span>
+      </div>
+      <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+        <a href="#about" class="hover:text-cyan-400 transition">About</a>
+        <a href="#future" class="hover:text-cyan-400 transition">Vision</a>
+        <a href="#scope" class="hover:text-cyan-400 transition">Scope & Data</a>
+        <a href="#samples" class="hover:text-cyan-400 transition">Payloads</a>
+      </nav>
+      <div class="text-xs font-semibold text-cyan-300 border border-cyan-500/40 px-3 py-1 rounded">v1.0-Draft</div>
+    </div>
+  </header>
+
+  <!-- --- 스크롤 스토리텔링 영역 --- -->
+  <div class="scrolly-container">
+    <div id="bg-interior" class="sticky-bg"></div>
+    <div id="bg-lookup" class="sticky-bg"></div>
+
+    <!-- Section 1: UAM의 꿈 -->
+    <section id="about" class="scroll-content active">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/60 text-cyan-300 text-xs font-medium mb-8 backdrop-blur">
+        <i data-lucide="plane-takeoff" class="w-4 h-4"></i> The Dawn of Urban Air Mobility
+      </div>
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
+        UAM의 꿈,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">도심 상공을 나는 자유</span>
+      </h1>
+      <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto mb-8 leading-relaxed drop-shadow">
+        지상의 혼잡을 벗어나 창밖으로 도시의 스카이라인을 바라보는 새로운 일상.
+      </p>
+      <i data-lucide="chevrons-down" class="w-8 h-8 text-cyan-400 animate-bounce mt-8"></i>
+    </section>
+
+    <!-- Section 2: 올려다보는 미래 -->
+    <section id="future" class="scroll-content">
+      <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
+        꿈, 미래, 그 모든 것...<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">버티포트 중심의 연결</span>
+      </h2>
+      <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto mb-8 leading-relaxed drop-shadow">
+        머리 위를 가로지르는 수많은 기체와 도심 곳곳에 자리 잡은 버티포트 허브.
+      </p>
+    </section>
+
+    <!-- Section 3: VIXM의 역할 -->
+    <section id="vixm-core" class="scroll-content">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/60 text-emerald-300 text-xs font-medium mb-8 backdrop-blur">
+        <i data-lucide="network" class="w-4 h-4"></i> Global Vertiport Data Standard
+      </div>
+      <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
+        버티포트,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">그 꿈을 현실로 잇는 VIXM</span>
+      </h2>
+      <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto mb-8 leading-relaxed drop-shadow">
+        안전하고 원활한 운항을 위한 정적 인프라 정보와 실시간 동적 상태 교환 모델
+      </p>
+    </section>
+  </div>
+
+  <!-- --- 기능성 섹션 --- -->
+  <div class="normal-section">
+    <!-- Scope & Data -->
+    <section class="max-w-7xl mx-auto px-6 py-24" id="scope">
+      <div class="text-center mb-14">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Core Scope of VIXM</h2>
+        <p class="text-slate-400">Capturing end-to-end ground & approach dimensions for vertiports</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-6 rounded-xl border border-slate-800 bg-slate-900/40">
+          <div class="w-12 h-12 rounded bg-cyan-950/60 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-5">
+            <i data-lucide="layers" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Static Infrastructure</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            TLOF/FATO geometry, obstacle clearance surfaces (OIS), passenger boarding gates, vertiport identification, and hazardous area constraints.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl border border-slate-800 bg-slate-900/40">
+          <div class="w-12 h-12 rounded bg-blue-950/60 border border-blue-500/20 text-blue-400 flex items-center justify-center mb-5">
+            <i data-lucide="activity" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Dynamic Operations</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Real-time pad availability, charging/MRO station status, slot reservations, turnaround times, and temporary operating restrictions.
+          </p>
+        </div>
+        <div class="p-6 rounded-xl border border-slate-800 bg-slate-900/40">
+          <div class="w-12 h-12 rounded bg-emerald-950/60 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5">
+            <i data-lucide="network" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">SWIM Integration</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Full semantic interoperability with Air Traffic Management (ATM) & UTM systems via standardized XML (GML) and JSON payloads.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payloads Section -->
+    <section class="max-w-7xl mx-auto px-6 py-16 border-t border-slate-800/80" id="samples">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">VIXM Sample Payloads</h2>
+        <p class="text-slate-400">Standardized formats for real-time dynamic events and static infrastructure exchange</p>
+      </div>
+
+      <div class="max-w-4xl mx-auto rounded-xl border border-slate-800 bg-[#0a0e17] overflow-hidden shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-800 bg-slate-900/70 px-4 py-3">
+          <div class="flex space-x-2">
+            <button id="tab-json" onclick="switchTab('json')" class="px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition">
+              Dynamic State (JSON)
+            </button>
+            <button id="tab-xml" onclick="switchTab('xml')" class="px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 transition">
+              Static Layout (XML/GML)
+            </button>
+          </div>
+          <span id="format-badge" class="text-[11px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">JSON Payload</span>
+        </div>
+
+        <div class="p-6 font-mono text-xs overflow-x-auto text-slate-300 leading-relaxed bg-[#070b13]">
+          <pre id="payload-json" class="block"><span class="text-slate-500">// Real-time Vertiport & Resource Allocation Status</span>
+{
+  <span class="text-cyan-400">"$schema"</span>: <span class="text-emerald-400">"https://vixm.aero/schemas/v1.0/vertiport-state.json"</span>,
+  <span class="text-cyan-400">"vertiportId"</span>: <span class="text-emerald-400">"ICN-VP-01"</span>,
+  <span class="text-cyan-400">"timestamp"</span>: <span class="text-emerald-400">"2026-08-21T12:50:00Z"</span>,
+  <span class="text-cyan-400">"operatingStatus"</span>: <span class="text-amber-400">"OPERATIONAL"</span>,
+  <span class="text-cyan-400">"tlofStatus"</span>: [
+    {
+      <span class="text-cyan-400">"padId"</span>: <span class="text-emerald-400">"TLOF-ALPHA"</span>,
+      <span class="text-cyan-400">"state"</span>: <span class="text-amber-400">"RESERVED"</span>,
+      <span class="text-cyan-400">"assignedFlightId"</span>: <span class="text-emerald-400">"AAM-KR-204"</span>,
+      <span class="text-cyan-400">"expectedClearanceTime"</span>: <span class="text-emerald-400">"2026-08-21T13:05:00Z"</span>
+    }
+  ],
+  <span class="text-cyan-400">"chargingServices"</span>: [
+    {
+      <span class="text-cyan-400">"chargerId"</span>: <span class="text-emerald-400">"CHG-01"</span>,
+      <span class="text-cyan-400">"powerAvailableKw"</span>: <span class="text-purple-400">350</span>,
+      <span class="text-cyan-400">"healthStatus"</span>: <span class="text-emerald-400">"NORMAL"</span>
+    }
+  ]
+}</pre>
+          <pre id="payload-xml" class="hidden"><span class="text-slate-500">&lt;!-- AIXM-harmonized Vertiport Geometry Definition --&gt;</span>
+&lt;<span class="text-cyan-400">vixm:Vertiport</span> <span class="text-amber-300">xmlns:vixm</span>=<span class="text-emerald-400">"http://www.vixm.aero/schema/1.0"</span> 
+                 <span class="text-amber-300">xmlns:gml</span>=<span class="text-emerald-400">"http://www.opengis.net/gml/3.2"</span> 
+                 <span class="text-amber-300">gml:id</span>=<span class="text-emerald-400">"VP-ICN-01"</span>&gt;
+  &lt;<span class="text-cyan-400">vixm:identifier</span>&gt;ICN-VP-01&lt;/<span class="text-cyan-400">vixm:identifier</span>&gt;
+  &lt;<span class="text-cyan-400">vixm:name</span>&gt;Incheon Central Vertiport&lt;/<span class="text-cyan-400">vixm:name</span>&gt;
+  &lt;<span class="text-cyan-400">vixm:tlofArea</span>&gt;
+    &lt;<span class="text-cyan-400">vixm:TLOF</span> <span class="text-amber-300">gml:id</span>=<span class="text-emerald-400">"TLOF-ALPHA"</span>&gt;
+      &lt;<span class="text-cyan-400">vixm:elevation</span> <span class="text-amber-300">uom</span>=<span class="text-emerald-400">"M"</span>&gt;24.5&lt;/<span class="text-cyan-400">vixm:elevation</span>&gt;
+    &lt;/<span class="text-cyan-400">vixm:TLOF</span>&gt;
+  &lt;/<span class="text-cyan-400">vixm:tlofArea</span>&gt;
+&lt;/<span class="text-cyan-400">vixm:Vertiport</span>&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-8 bg-[#070a11]">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div>VIXM Community Initiative • K-VIXM Project</div>
+        <div class="flex space-x-6">
+          <a href="https://github.com/k-vixm" class="hover:text-slate-200">GitHub</a>
+          <a href="https://www.fixm.aero" target="_blank" class="hover:text-slate-200">FIXM.aero</a>
+          <a href="https://aixm.aero" target="_blank" class="hover:text-slate-200">AIXM.aero</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 스크롤 감지 및 배경/텍스트 전환
+    const scrollContents = document.querySelectorAll('.scroll-content');
+    const bgInterior = document.getElementById('bg-interior');
+    const bgLookup = document.getElementById('bg-lookup');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      // 텍스트 활성화 트리거
+      scrollContents.forEach((content) => {
+        const rect = content.getBoundingClientRect();
+        if (rect.top <= windowHeight * 0.4 && rect.bottom >= windowHeight * 0.4) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+
+      // 배경 전환 (스크롤 위치에 따라 Interior -> Lookup 페이드 전환)
+      if (scrollY < windowHeight * 0.8) {
+        bgInterior.style.opacity = 1;
+        bgLookup.style.opacity = 0;
+      } else {
+        bgInterior.style.opacity = 0;
+        bgLookup.style.opacity = 1;
+      }
+    });
+
+    function switchTab(type) {
+      const jsonPre = document.getElementById('payload-json');
+      const xmlPre = document.getElementById('payload-xml');
+      const jsonBtn = document.getElementById('tab-json');
+      const xmlBtn = document.getElementById('tab-xml');
+      const badge = document.getElementById('format-badge');
+
+      if (type === 'json') {
+        jsonPre.classList.remove('hidden');
+        xmlPre.classList.add('hidden');
+        jsonBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition';
+        xmlBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 transition';
+        badge.innerText = 'JSON Payload';
+      } else {
+        jsonPre.classList.add('hidden');
+        xmlPre.classList.remove('hidden');
+        xmlBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition';
+        jsonBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 transition';
+        badge.innerText = 'GML/XML Payload';
+      }
+    }
+  </script>
+</body>
+</html>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
