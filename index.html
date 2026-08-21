@@ -38,7 +38,7 @@
 
     /* 배경 1: 기체 내부 뷰 */
     #bg-interior {
-      background-image: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), url('https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F867687%2Farcher-aviation-evtol-aircraft-on-tarmac-at-sunset-n703ax-achr-6.jpg&w=1080&op=resize');
+      background-image: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), url('https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1920&q=80');
       opacity: 1;
       transform: scale(1);
       z-index: 1;
@@ -74,6 +74,7 @@
       width: 100%;
     }
     
+    /* 활성화된 텍스트 */
     .story-step.active {
       opacity: 1;
       transform: translateY(0);
@@ -114,8 +115,8 @@
       <div id="bg-lookup" class="bg-layer"></div>
 
       <div class="text-layer">
-        <!-- Step 1 -->
-        <div class="story-step" id="step-1">
+        <!-- Step 1: 초기 진입 시 바로 활성화 -->
+        <div class="story-step active" id="step-1">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/60 text-cyan-300 text-xs font-medium mb-6">
             <i data-lucide="plane-takeoff" class="w-4 h-4"></i> The Dawn of Urban Air Mobility
           </div>
@@ -377,7 +378,7 @@
     const step2 = document.getElementById('step-2');
     const step3 = document.getElementById('step-3');
 
-    window.addEventListener('scroll', () => {
+    function updateScroll() {
       const rect = track.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
@@ -404,7 +405,7 @@
         step3.classList.add('active');
       }
 
-      // 배경 전환 로직 (크로스페이드 구간)
+      // 배경 전환 로직
       if (progress < 0.35) {
         bgInterior.style.opacity = '1';
         bgInterior.style.transform = `scale(${1 + progress * 0.05})`;
@@ -419,7 +420,11 @@
         bgLookup.style.opacity = '1';
         bgLookup.style.transform = `scale(${1.05 + (progress - 0.55) * 0.05})`;
       }
-    });
+    }
+
+    // 스크롤 이벤트 리스너 등록 및 초기 1회 실행
+    window.addEventListener('scroll', updateScroll);
+    updateScroll();
 
     function switchTab(type) {
       const jsonPre = document.getElementById('payload-json');
