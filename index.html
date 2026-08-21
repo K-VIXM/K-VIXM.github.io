@@ -3,12 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VIXM - 버티포트 정보 교환 모델. 도시 항공 모빌리티(UAM)의 글로벌 표준 데이터 교환 프레임워크">
+  <meta name="theme-color" content="#0b0f19">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="VIXM - Vertiport Information Exchange Model">
+  <meta property="og:description" content="Urban Air Mobility를 위한 글로벌 버티포트 데이터 표준">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vixm.aero">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%2306b6d4' width='32' height='32' rx='4'/%3E%3Ctext x='50%25' y='50%25' font-size='20' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'%3EV%3C/text%3E%3C/svg%3E">
+  
   <title>VIXM - Vertiport Information Exchange Model</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    :root { --bg-color: #0b0f19; }
-    body { background-color: var(--bg-color); color: #f1f5f9; font-family: sans-serif; margin: 0; padding: 0; }
+    :root { 
+      --bg-color: #0b0f19;
+      --reduce-motion: no-preference;
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      :root { --reduce-motion: reduce; }
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    body { 
+      background-color: var(--bg-color); 
+      color: #f1f5f9; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+      margin: 0; 
+      padding: 0; 
+    }
 
     /* 스크롤 트리거 트랙 */
     .scroll-track {
@@ -38,7 +69,7 @@
 
     /* 배경 1: 기체 내부 뷰 */
     #bg-interior {
-      background-image: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), url('https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F867687%2Farcher-aviation-evtol-aircraft-on-tarmac-at-sunset-n703ax-achr-6.jpg&w=1080&op=resize');
+      background-image: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), url('https://images.unsplash.com/photo-1540962614290-7336e5ff927f?auto=format&fit=crop&w=1920&q=80');
       opacity: 1;
       transform: scale(1);
       z-index: 1;
@@ -85,6 +116,42 @@
       background-color: var(--bg-color);
       z-index: 20;
     }
+
+    /* 모바일 메뉴 토글 */
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu {
+        display: block;
+      }
+      
+      nav.hidden.md\:flex {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: rgba(15, 23, 42, 0.95);
+        border-b: 1px solid rgba(15, 23, 42, 0.5);
+        backdrop-filter: blur(8px);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        z-index: 40;
+      }
+
+      nav.hidden.md\:flex.active {
+        max-height: 300px;
+      }
+
+      nav.hidden.md\:flex a {
+        display: block;
+        padding: 12px 24px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+      }
+    }
   </style>
 </head>
 <body class="selection:bg-cyan-500 selection:text-white">
@@ -93,9 +160,11 @@
   <header class="border-b border-slate-800/80 fixed top-0 left-0 w-full bg-[#0b0f19]/80 backdrop-blur z-50">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded bg-cyan-500 flex items-center justify-center font-bold text-slate-950">V</div>
+        <div class="w-8 h-8 rounded bg-cyan-500 flex items-center justify-center font-bold text-slate-950" aria-label="VIXM Logo">V</div>
         <span class="text-xl font-bold tracking-tight text-white">VIXM<span class="text-cyan-400">.aero</span></span>
       </div>
+      
+      <!-- Desktop Navigation -->
       <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
         <a href="#vision" class="hover:text-cyan-400 transition">Vision</a>
         <a href="#scope" class="hover:text-cyan-400 transition">Scope</a>
@@ -103,21 +172,40 @@
         <a href="#leadership" class="hover:text-cyan-400 transition">Leadership</a>
         <a href="#samples" class="hover:text-cyan-400 transition">Payloads</a>
       </nav>
-      <div class="text-xs font-semibold text-cyan-300 border border-cyan-500/40 px-3 py-1 rounded">v1.0-Draft</div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-300 hover:text-cyan-400 transition" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      
+      <div class="hidden md:block text-xs font-semibold text-cyan-300 border border-cyan-500/40 px-3 py-1 rounded">v1.0-Draft</div>
     </div>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav" class="hidden md:flex flex-col" aria-label="Mobile navigation">
+      <a href="#vision" class="px-6 py-3 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition border-b border-slate-800">Vision</a>
+      <a href="#scope" class="px-6 py-3 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition border-b border-slate-800">Scope</a>
+      <a href="#ecosystem" class="px-6 py-3 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition border-b border-slate-800">Ecosystem</a>
+      <a href="#leadership" class="px-6 py-3 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition border-b border-slate-800">Leadership</a>
+      <a href="#samples" class="px-6 py-3 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 transition">Payloads</a>
+      <div class="px-6 py-3 text-xs font-semibold text-cyan-300 border border-cyan-500/40 rounded mx-4 mb-4 text-center">v1.0-Draft</div>
+    </nav>
   </header>
 
   <!-- === 스크롤 애니메이션 영역 (Scroll Track) === -->
   <div class="scroll-track" id="vision">
     <div class="sticky-frame">
-      <div id="bg-interior" class="bg-layer"></div>
-      <div id="bg-lookup" class="bg-layer"></div>
+      <div id="bg-interior" class="bg-layer" aria-hidden="true"></div>
+      <div id="bg-lookup" class="bg-layer" aria-hidden="true"></div>
 
       <div class="text-layer">
         <!-- Step 1 -->
         <div class="story-step" id="step-1">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/60 text-cyan-300 text-xs font-medium mb-6">
-            <i data-lucide="plane-takeoff" class="w-4 h-4"></i> The Dawn of Urban Air Mobility
+            <svg data-lucide="plane-takeoff" class="w-4 h-4" aria-hidden="true"></svg>
+            <span>The Dawn of Urban Air Mobility</span>
           </div>
           <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 drop-shadow-lg">
             UAM의 꿈,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">상공을 나는 자유</span>
@@ -125,8 +213,8 @@
           <p class="text-lg text-slate-300 max-w-xl mx-auto drop-shadow">
             꽉 막힌 도로를 벗어나 창문 너머로 도시를 내려다보는 비행, 상상이 일상이 됩니다.
           </p>
-          <div class="mt-8 text-cyan-400 animate-bounce">
-            <i data-lucide="chevrons-down" class="w-8 h-8 mx-auto"></i>
+          <div class="mt-8 text-cyan-400 animate-bounce" aria-label="Scroll to continue">
+            <svg data-lucide="chevrons-down" class="w-8 h-8 mx-auto" aria-hidden="true"></svg>
           </div>
         </div>
 
@@ -143,7 +231,8 @@
         <!-- Step 3 -->
         <div class="story-step" id="step-3">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/60 text-emerald-300 text-xs font-medium mb-6">
-            <i data-lucide="network" class="w-4 h-4"></i> Global Vertiport Data Standard
+            <svg data-lucide="network" class="w-4 h-4" aria-hidden="true"></svg>
+            <span>Global Vertiport Data Standard</span>
           </div>
           <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 drop-shadow-lg">
             버티포트,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">그 꿈을 현실로 잇는 VIXM</span>
@@ -167,8 +256,8 @@
       </div>
       <div class="grid md:grid-cols-3 gap-8">
         <div class="p-6 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition">
-          <div class="w-12 h-12 rounded bg-cyan-950/60 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-5">
-            <i data-lucide="layers" class="w-6 h-6"></i>
+          <div class="w-12 h-12 rounded bg-cyan-950/60 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-5" aria-hidden="true">
+            <svg data-lucide="layers" class="w-6 h-6"></svg>
           </div>
           <h3 class="text-lg font-bold text-white mb-2">Static Infrastructure</h3>
           <p class="text-sm text-slate-400 leading-relaxed">
@@ -176,8 +265,8 @@
           </p>
         </div>
         <div class="p-6 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition">
-          <div class="w-12 h-12 rounded bg-blue-950/60 border border-blue-500/20 text-blue-400 flex items-center justify-center mb-5">
-            <i data-lucide="activity" class="w-6 h-6"></i>
+          <div class="w-12 h-12 rounded bg-blue-950/60 border border-blue-500/20 text-blue-400 flex items-center justify-center mb-5" aria-hidden="true">
+            <svg data-lucide="activity" class="w-6 h-6"></svg>
           </div>
           <h3 class="text-lg font-bold text-white mb-2">Dynamic Operations</h3>
           <p class="text-sm text-slate-400 leading-relaxed">
@@ -185,8 +274,8 @@
           </p>
         </div>
         <div class="p-6 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition">
-          <div class="w-12 h-12 rounded bg-emerald-950/60 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5">
-            <i data-lucide="network" class="w-6 h-6"></i>
+          <div class="w-12 h-12 rounded bg-emerald-950/60 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5" aria-hidden="true">
+            <svg data-lucide="network" class="w-6 h-6"></svg>
           </div>
           <h3 class="text-lg font-bold text-white mb-2">SWIM Integration</h3>
           <p class="text-sm text-slate-400 leading-relaxed">
@@ -253,7 +342,8 @@
             <div class="relative w-full max-w-sm rounded-2xl overflow-hidden border border-cyan-500/30 shadow-2xl group">
               <img 
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" 
-                alt="Aviation Software & FF-ICE Expert" 
+                alt="Aviation Software & FF-ICE Expert"
+                loading="lazy"
                 class="w-full h-96 object-cover object-top transition duration-500 group-hover:scale-105"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-transparent opacity-80"></div>
@@ -267,7 +357,8 @@
           <!-- Expert Details -->
           <div class="md:col-span-7 space-y-5 text-left">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-xs font-medium">
-              <i data-lucide="award" class="w-4 h-4"></i> 20+ Years Aviation Software Experience
+              <svg data-lucide="award" class="w-4 h-4" aria-hidden="true"></svg>
+              <span>20+ Years Aviation Software Experience</span>
             </div>
             
             <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
@@ -275,11 +366,11 @@
             </h2>
             
             <p class="text-sm md:text-base text-slate-300 leading-relaxed">
-              VIXM은 공학적 고립 속에서 만들어진 데이터 포맷이 아닙니다. ICAO의 글로벌 비행 흐름 정보 교환 표준인 <strong>FF-ICE</strong>(Flight & Flow Information for a Collaborative Environment) 및 글로벌 항공 관제(ATM) 시스템 구축에 20년 이상 헌신해 온 항공 소프트웨어 아키텍트의 경험을 바탕으로 탄생했습니다.
+              VIXM은 공학적 고립 속에서 만들어진 데이터 포맷이 아닙니다. ICAO의 글로벌 비행 흐름 정보 교환 표준인 <strong>FF-ICE</strong>(Flight & Flow Information Exchange)의 철학을 기반으로, 버티포트의 독특한 특성을 반영하여 설계되었습니다.
             </p>
 
             <p class="text-sm text-slate-400 leading-relaxed">
-              기존 항공 관제(ATM/SWIM)의 FIXM 체계와 버티포트(VPO/PSU) 간의 유기적인 연동성을 보장하며, 복잡한 실시간 4D 궤적 및 지상 자원 스케줄링을 단일한 표준으로 조율합니다.
+              기존 항공 관제(ATM/SWIM)의 FIXM 체계와 버티포트(VPO/PSU) 간의 유기적인 연동성을 보장하며, 복잡한 실시간 4D 궤적 및 지상 자원 스케줄링을 효율적으로 관리할 수 있는 프레임워크를 제공합니다. VIXM은 단순한 데이터 모델이 아닌, 미래 도시항공교통 생태계의 중추신경입니다.
             </p>
 
             <!-- Badges -->
@@ -302,12 +393,12 @@
       </div>
 
       <div class="max-w-4xl mx-auto rounded-xl border border-slate-800 bg-[#0a0e17] overflow-hidden shadow-2xl">
-        <div class="flex items-center justify-between border-b border-slate-800 bg-slate-900/70 px-4 py-3">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between border-b border-slate-800 bg-slate-900/70 px-4 py-3 gap-3">
           <div class="flex space-x-2">
-            <button id="tab-json" onclick="switchTab('json')" class="px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition">
+            <button id="tab-json" onclick="switchTab('json')" class="px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition focus:outline-none focus:ring-2 focus:ring-cyan-400" role="tab" aria-selected="true" aria-controls="payload-json">
               Dynamic State (JSON)
             </button>
-            <button id="tab-xml" onclick="switchTab('xml')" class="px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 transition">
+            <button id="tab-xml" onclick="switchTab('xml')" class="px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 transition focus:outline-none focus:ring-2 focus:ring-cyan-400" role="tab" aria-selected="false" aria-controls="payload-xml">
               Static Layout (XML/GML)
             </button>
           </div>
@@ -315,7 +406,7 @@
         </div>
 
         <div class="p-6 font-mono text-xs overflow-x-auto text-slate-300 leading-relaxed bg-[#070b13]">
-<pre id="payload-json" class="block"><span class="text-slate-500">// Real-time Vertiport Status</span>
+<pre id="payload-json" class="block" role="tabpanel" aria-labelledby="tab-json"><span class="text-slate-500">// Real-time Vertiport Status</span>
 {
   <span class="text-cyan-400">"$schema"</span>: <span class="text-emerald-400">"https://vixm.aero/schemas/v1.0/state.json"</span>,
   <span class="text-cyan-400">"vertiportId"</span>: <span class="text-emerald-400">"ICN-VP-01"</span>,
@@ -328,7 +419,7 @@
     }
   ]
 }</pre>
-<pre id="payload-xml" class="hidden"><span class="text-slate-500">&lt;!-- Static Geometry Definition --&gt;</span>
+<pre id="payload-xml" class="hidden" role="tabpanel" aria-labelledby="tab-xml"><span class="text-slate-500">&lt;!-- Static Geometry Definition --&gt;</span>
 &lt;<span class="text-cyan-400">vixm:Vertiport</span> <span class="text-amber-300">xmlns:vixm</span>=<span class="text-emerald-400">"http://www.vixm.aero/schema/1.0"</span> 
                  <span class="text-amber-300">gml:id</span>=<span class="text-emerald-400">"VP-ICN-01"</span>&gt;
   &lt;<span class="text-cyan-400">vixm:identifier</span>&gt;ICN-VP-01&lt;/<span class="text-cyan-400">vixm:identifier</span>&gt;
@@ -341,23 +432,23 @@
     <!-- Schema & Documentation Placeholder -->
     <section class="max-w-5xl mx-auto px-6 py-16 border-t border-slate-800/80" id="schema">
       <div class="rounded-2xl border border-slate-800 bg-[#0a0e17] p-8 md:p-12 text-center shadow-lg">
-        <div class="inline-flex p-3 rounded-full bg-slate-800/50 mb-6 text-cyan-400 ring-1 ring-white/10">
-          <i data-lucide="terminal" class="w-6 h-6"></i>
+        <div class="inline-flex p-3 rounded-full bg-slate-800/50 mb-6 text-cyan-400 ring-1 ring-white/10" aria-hidden="true">
+          <svg data-lucide="terminal" class="w-6 h-6"></svg>
         </div>
         <h3 class="text-2xl font-bold text-white mb-4">VIXM Specifications & UML Models</h3>
         <p class="text-sm text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
           The Unified Modeling Language (UML) class models, XML Schemas (XSD), and JSON Schemas will be published here upon release candidate approval.
         </p>
         <div class="flex flex-wrap justify-center gap-4 text-xs font-mono">
-          <button class="px-5 py-2.5 rounded bg-slate-800/80 border border-slate-700 hover:border-slate-600 hover:bg-slate-700/80 text-slate-300 transition cursor-not-allowed">
+          <div class="px-5 py-2.5 rounded bg-slate-800/80 border border-slate-700 text-slate-400 cursor-not-allowed" role="status" aria-label="Coming Soon">
             XSD Schemas (Coming Soon)
-          </button>
-          <button class="px-5 py-2.5 rounded bg-slate-800/80 border border-slate-700 hover:border-slate-600 hover:bg-slate-700/80 text-slate-300 transition cursor-not-allowed">
+          </div>
+          <div class="px-5 py-2.5 rounded bg-slate-800/80 border border-slate-700 text-slate-400 cursor-not-allowed" role="status" aria-label="Coming Soon">
             JSON Schemas (Coming Soon)
-          </button>
-          <button class="px-5 py-2.5 rounded bg-slate-800/80 border border-slate-700 hover:border-slate-600 hover:bg-slate-700/80 text-slate-300 transition cursor-not-allowed">
+          </div>
+          <div class="px-5 py-2.5 rounded bg-slate-800/80 border border-slate-700 text-slate-400 cursor-not-allowed" role="status" aria-label="Coming Soon">
             UML Reference (Coming Soon)
-          </button>
+          </div>
         </div>
       </div>
     </section>
@@ -368,22 +459,46 @@
   </div>
 
   <script>
+    // Initialize Lucide icons
     lucide.createIcons();
 
-    const track = document.querySelector('.scroll-track');
-    const bgInterior = document.getElementById('bg-interior');
-    const bgLookup = document.getElementById('bg-lookup');
-    const step1 = document.getElementById('step-1');
-    const step2 = document.getElementById('step-2');
-    const step3 = document.getElementById('step-3');
+    // DOM Element Caching
+    const cachedElements = {
+      track: document.querySelector('.scroll-track'),
+      bgInterior: document.getElementById('bg-interior'),
+      bgLookup: document.getElementById('bg-lookup'),
+      step1: document.getElementById('step-1'),
+      step2: document.getElementById('step-2'),
+      step3: document.getElementById('step-3'),
+      mobileMenuBtn: document.getElementById('mobile-menu-btn'),
+      mobileNav: document.getElementById('mobile-nav'),
+    };
+
+    // Mobile Menu Toggle
+    cachedElements.mobileMenuBtn?.addEventListener('click', () => {
+      const isExpanded = cachedElements.mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+      cachedElements.mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+      cachedElements.mobileNav.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('#mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        cachedElements.mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        cachedElements.mobileNav.classList.add('hidden');
+      });
+    });
+
+    // Check for prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     window.addEventListener('scroll', () => {
-      const rect = track.getBoundingClientRect();
+      const rect = cachedElements.track.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
       let progress = 0;
       if (rect.top <= 0) {
-        const scrollDistance = track.offsetHeight - windowHeight;
+        const scrollDistance = cachedElements.track.offsetHeight - windowHeight;
         progress = Math.abs(rect.top) / scrollDistance;
       }
       
@@ -391,33 +506,35 @@
 
       // 텍스트 활성화 로직
       if (progress < 0.3) {
-        step1.classList.add('active');
-        step2.classList.remove('active');
-        step3.classList.remove('active');
+        cachedElements.step1.classList.add('active');
+        cachedElements.step2.classList.remove('active');
+        cachedElements.step3.classList.remove('active');
       } else if (progress >= 0.3 && progress < 0.65) {
-        step1.classList.remove('active');
-        step2.classList.add('active');
-        step3.classList.remove('active');
+        cachedElements.step1.classList.remove('active');
+        cachedElements.step2.classList.add('active');
+        cachedElements.step3.classList.remove('active');
       } else {
-        step1.classList.remove('active');
-        step2.classList.remove('active');
-        step3.classList.add('active');
+        cachedElements.step1.classList.remove('active');
+        cachedElements.step2.classList.remove('active');
+        cachedElements.step3.classList.add('active');
       }
 
       // 배경 전환 로직 (크로스페이드 구간)
-      if (progress < 0.35) {
-        bgInterior.style.opacity = '1';
-        bgInterior.style.transform = `scale(${1 + progress * 0.05})`;
-        bgLookup.style.opacity = '0';
-      } else if (progress >= 0.35 && progress <= 0.55) {
-        let fadeProgress = (progress - 0.35) / 0.2;
-        bgInterior.style.opacity = `${1 - fadeProgress}`;
-        bgLookup.style.opacity = `${fadeProgress}`;
-        bgLookup.style.transform = `scale(${1.1 - fadeProgress * 0.05})`;
-      } else {
-        bgInterior.style.opacity = '0';
-        bgLookup.style.opacity = '1';
-        bgLookup.style.transform = `scale(${1.05 + (progress - 0.55) * 0.05})`;
+      if (!prefersReducedMotion) {
+        if (progress < 0.35) {
+          cachedElements.bgInterior.style.opacity = '1';
+          cachedElements.bgInterior.style.transform = `scale(${1 + progress * 0.05})`;
+          cachedElements.bgLookup.style.opacity = '0';
+        } else if (progress >= 0.35 && progress <= 0.55) {
+          let fadeProgress = (progress - 0.35) / 0.2;
+          cachedElements.bgInterior.style.opacity = `${1 - fadeProgress}`;
+          cachedElements.bgLookup.style.opacity = `${fadeProgress}`;
+          cachedElements.bgLookup.style.transform = `scale(${1.1 - fadeProgress * 0.05})`;
+        } else {
+          cachedElements.bgInterior.style.opacity = '0';
+          cachedElements.bgLookup.style.opacity = '1';
+          cachedElements.bgLookup.style.transform = `scale(${1.05 + (progress - 0.55) * 0.05})`;
+        }
       }
     });
 
@@ -428,20 +545,24 @@
       const xmlBtn = document.getElementById('tab-xml');
       const badge = document.getElementById('format-badge');
 
-      const activeClass = "px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition";
-      const inactiveClass = "px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 transition";
+      const activeClass = "px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition focus:outline-none focus:ring-2 focus:ring-cyan-400";
+      const inactiveClass = "px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 transition focus:outline-none focus:ring-2 focus:ring-cyan-400";
 
       if (type === 'json') {
         jsonPre.classList.remove('hidden');
         xmlPre.classList.add('hidden');
         jsonBtn.className = activeClass;
+        jsonBtn.setAttribute('aria-selected', 'true');
         xmlBtn.className = inactiveClass;
+        xmlBtn.setAttribute('aria-selected', 'false');
         badge.innerText = 'JSON Payload';
       } else {
         jsonPre.classList.add('hidden');
         xmlPre.classList.remove('hidden');
         xmlBtn.className = activeClass;
+        xmlBtn.setAttribute('aria-selected', 'true');
         jsonBtn.className = inactiveClass;
+        jsonBtn.setAttribute('aria-selected', 'false');
         badge.innerText = 'GML/XML Payload';
       }
     }
