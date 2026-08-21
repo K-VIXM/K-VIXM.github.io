@@ -27,6 +27,7 @@
         <a href="#about" class="hover:text-cyan-400 transition">About</a>
         <a href="#scope" class="hover:text-cyan-400 transition">Scope & Data</a>
         <a href="#ecosystem" class="hover:text-cyan-400 transition">Ecosystem</a>
+        <a href="#samples" class="hover:text-cyan-400 transition">Payloads</a>
         <a href="#schema" class="hover:text-cyan-400 transition">Schema & Docs</a>
       </nav>
       <div>
@@ -47,8 +48,8 @@
       <strong>VIXM</strong> (Vertiport Information Exchange Model) is an internationally aligned data specification designed to seamlessly exchange static infrastructure, dynamic operational status, and capacity constraints across the UAM ecosystem.
     </p>
     <div class="flex flex-wrap justify-center gap-4">
-      <a href="#schema" class="px-6 py-3 rounded bg-cyan-500 text-slate-950 font-semibold hover:bg-cyan-400 transition flex items-center gap-2">
-        <i data-lucide="file-code" class="w-4 h-4"></i> Explore Schemas
+      <a href="#samples" class="px-6 py-3 rounded bg-cyan-500 text-slate-950 font-semibold hover:bg-cyan-400 transition flex items-center gap-2">
+        <i data-lucide="code" class="w-4 h-4"></i> View Payloads
       </a>
       <a href="https://github.com/k-vixm" target="_blank" class="px-6 py-3 rounded border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-200 font-semibold transition flex items-center gap-2">
         <i data-lucide="github" class="w-4 h-4"></i> GitHub Repository
@@ -141,6 +142,78 @@
     </div>
   </section>
 
+  <!-- Interactive Sample Payloads Section -->
+  <section class="max-w-7xl mx-auto px-6 py-16 border-t border-slate-800/80" id="samples">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">VIXM Sample Payloads</h2>
+      <p class="text-slate-400">Standardized formats for real-time dynamic events and static infrastructure exchange</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto rounded-xl border border-slate-800 bg-[#0a0e17] overflow-hidden shadow-2xl">
+      <!-- Tab Header -->
+      <div class="flex items-center justify-between border-b border-slate-800 bg-slate-900/70 px-4 py-3">
+        <div class="flex space-x-2">
+          <button id="tab-json" onclick="switchTab('json')" class="px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition">
+            Dynamic State (JSON)
+          </button>
+          <button id="tab-xml" onclick="switchTab('xml')" class="px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition">
+            Static Layout (XML/GML)
+          </button>
+        </div>
+        <span id="format-badge" class="text-[11px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">JSON Payload</span>
+      </div>
+
+      <!-- Code Viewer Window -->
+      <div class="p-6 font-mono text-xs overflow-x-auto text-slate-300 leading-relaxed bg-[#070b13]">
+        <pre id="payload-json" class="block"><span class="text-slate-500">// Real-time Vertiport & Resource Allocation Status</span>
+{
+  <span class="text-cyan-400">"$schema"</span>: <span class="text-emerald-400">"https://vixm.aero/schemas/v1.0/vertiport-state.json"</span>,
+  <span class="text-cyan-400">"vertiportId"</span>: <span class="text-emerald-400">"ICN-VP-01"</span>,
+  <span class="text-cyan-400">"timestamp"</span>: <span class="text-emerald-400">"2026-08-21T12:50:00Z"</span>,
+  <span class="text-cyan-400">"operatingStatus"</span>: <span class="text-amber-400">"OPERATIONAL"</span>,
+  <span class="text-cyan-400">"tlofStatus"</span>: [
+    {
+      <span class="text-cyan-400">"padId"</span>: <span class="text-emerald-400">"TLOF-ALPHA"</span>,
+      <span class="text-cyan-400">"state"</span>: <span class="text-amber-400">"RESERVED"</span>,
+      <span class="text-cyan-400">"assignedFlightId"</span>: <span class="text-emerald-400">"AAM-KR-204"</span>,
+      <span class="text-cyan-400">"expectedClearanceTime"</span>: <span class="text-emerald-400">"2026-08-21T13:05:00Z"</span>
+    },
+    {
+      <span class="text-cyan-400">"padId"</span>: <span class="text-emerald-400">"TLOF-BRAVO"</span>,
+      <span class="text-cyan-400">"state"</span>: <span class="text-emerald-400">"AVAILABLE"</span>
+    }
+  ],
+  <span class="text-cyan-400">"chargingServices"</span>: [
+    {
+      <span class="text-cyan-400">"chargerId"</span>: <span class="text-emerald-400">"CHG-01"</span>,
+      <span class="text-cyan-400">"powerAvailableKw"</span>: <span class="text-purple-400">350</span>,
+      <span class="text-cyan-400">"healthStatus"</span>: <span class="text-emerald-400">"NORMAL"</span>
+    }
+  ]
+}</pre>
+
+        <pre id="payload-xml" class="hidden"><span class="text-slate-500">&lt;!-- AIXM-harmonized Vertiport Geometry & Physical Definition --&gt;</span>
+&lt;<span class="text-cyan-400">vixm:Vertiport</span> <span class="text-amber-300">xmlns:vixm</span>=<span class="text-emerald-400">"http://www.vixm.aero/schema/1.0"</span> 
+                 <span class="text-amber-300">xmlns:gml</span>=<span class="text-emerald-400">"http://www.opengis.net/gml/3.2"</span> 
+                 <span class="text-amber-300">gml:id</span>=<span class="text-emerald-400">"VP-ICN-01"</span>&gt;
+  &lt;<span class="text-cyan-400">vixm:identifier</span>&gt;ICN-VP-01&lt;/<span class="text-cyan-400">vixm:identifier</span>&gt;
+  &lt;<span class="text-cyan-400">vixm:name</span>&gt;Incheon Central Vertiport&lt;/<span class="text-cyan-400">vixm:name</span>&gt;
+  &lt;<span class="text-cyan-400">vixm:designatorDValue</span>&gt;14.5&lt;/<span class="text-cyan-400">vixm:designatorDValue</span>&gt;
+  &lt;<span class="text-cyan-400">vixm:tlofArea</span>&gt;
+    &lt;<span class="text-cyan-400">vixm:TLOF</span> <span class="text-amber-300">gml:id</span>=<span class="text-emerald-400">"TLOF-ALPHA"</span>&gt;
+      &lt;<span class="text-cyan-400">vixm:elevation</span> <span class="text-amber-300">uom</span>=<span class="text-emerald-400">"M"</span>&gt;24.5&lt;/<span class="text-cyan-400">vixm:elevation</span>&gt;
+      &lt;<span class="text-cyan-400">vixm:geometry</span>&gt;
+        &lt;<span class="text-cyan-400">gml:Polygon</span> <span class="text-amber-300">srsName</span>=<span class="text-emerald-400">"urn:ogc:def:crs:EPSG::4326"</span>&gt;
+          &lt;<span class="text-cyan-400">gml:posList</span>&gt;37.4692 126.4505 37.4692 126.4510 37.4688 126.4510 37.4688 126.4505 37.4692 126.4505&lt;/<span class="text-cyan-400">gml:posList</span>&gt;
+        &lt;/<span class="text-cyan-400">gml:Polygon</span>&gt;
+      &lt;/<span class="text-cyan-400">vixm:geometry</span>&gt;
+    &lt;/<span class="text-cyan-400">vixm:TLOF</span>&gt;
+  &lt;/<span class="text-cyan-400">vixm:tlofArea</span>&gt;
+&lt;/<span class="text-cyan-400">vixm:Vertiport</span>&gt;</pre>
+      </div>
+    </div>
+  </section>
+
   <!-- Schema & Documentation Placeholder -->
   <section class="max-w-5xl mx-auto px-6 py-16" id="schema">
     <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-8 md:p-12 text-center">
@@ -177,6 +250,28 @@
 
   <script>
     lucide.createIcons();
+
+    function switchTab(type) {
+      const jsonPre = document.getElementById('payload-json');
+      const xmlPre = document.getElementById('payload-xml');
+      const jsonBtn = document.getElementById('tab-json');
+      const xmlBtn = document.getElementById('tab-xml');
+      const badge = document.getElementById('format-badge');
+
+      if (type === 'json') {
+        jsonPre.classList.remove('hidden');
+        xmlPre.classList.add('hidden');
+        jsonBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition';
+        xmlBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition';
+        badge.innerText = 'JSON Payload';
+      } else {
+        jsonPre.classList.add('hidden');
+        xmlPre.classList.remove('hidden');
+        xmlBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition';
+        jsonBtn.className = 'px-4 py-1.5 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition';
+        badge.innerText = 'GML/XML Payload';
+      }
+    }
   </script>
 </body>
 </html>
