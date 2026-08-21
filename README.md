@@ -27,7 +27,7 @@ VIXM is engineered to operate seamlessly within the global **SWIM (System Wide I
 | :--- | :--- | :--- | :--- |
 | **AIXM** | Aeronautical Information | Airspace, Routes, Traditional Aerodromes | AIS, NOTAM, ATM |
 | **FIXM** | Flight Information | 4D Trajectories, Flight Intent, Flow Planning | ATC, Airline AOC, PSU |
-| **WXXM** | Weather Information | Meteorological Observations & Forecasts | MET Providers, Flight Dispatch |
+| **IWXXM** | Weather Information | Meteorological Observations & Forecasts | MET Providers, Flight Dispatch |
 | **VIXM** | **Vertiport Information** | **TLOF/FATO Geometry, Real-time Slot & Charger State** | **VPO, Fleet Operators, PSU/USS** |
 
 ---
