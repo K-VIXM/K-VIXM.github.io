@@ -88,7 +88,7 @@ Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Env
 ### 1. VIXM Dynamic Vertiport State (`vertiport-state.json`)
 ```json
 {
-  "$schema": "https://vixm.aero/schemas/v1.0/vertiport-state.json",
+  "$schema": "[https://vixm.aero/schemas/v1.0/vertiport-state.json](https://vixm.aero/schemas/v1.0/vertiport-state.json)",
   "vertiportId": "ICN-VP-01",
   "timestamp": "2026-08-22T11:00:00Z",
   "operatingStatus": "OPERATIONAL",
@@ -99,14 +99,43 @@ Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Env
       "assignedFlightId": "UAM-KR-102",
       "expectedClearanceTime": "2026-08-22T11:15:00Z"
     }
+  ],
+  "chargingServices": [
+    {
+      "chargerId": "CHG-01",
+      "powerAvailableKw": 350,
+      "healthStatus": "NORMAL"
+    }
   ]
 }
 ```
 
-### 2. UIXM Collaborative Flight Intent (`uam-flight-intent.json` - UAM FF-ICE)
+### 2. VIXM Static Vertiport Geometry (`vertiport-layout.xml` - GML Compliant)
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<vixm:Vertiport xmlns:vixm="[http://www.vixm.aero/schema/1.0](http://www.vixm.aero/schema/1.0)"
+                 xmlns:gml="[http://www.opengis.net/gml/3.2](http://www.opengis.net/gml/3.2)"
+                 gml:id="VP-ICN-01">
+  <vixm:identifier>ICN-VP-01</vixm:identifier>
+  <vixm:name>Incheon Central Vertiport</vixm:name>
+  <vixm:designatorDValue uom="M">14.5</vixm:designatorDValue>
+  <vixm:tlofArea>
+    <vixm:TLOF gml:id="TLOF-ALPHA">
+      <vixm:elevation uom="M">24.5</vixm:elevation>
+      <vixm:geometry>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::4326">
+          <gml:posList>37.4692 126.4505 37.4692 126.4510 37.4688 126.4510 37.4688 126.4505 37.4692 126.4505</gml:posList>
+        </gml:Polygon>
+      </vixm:geometry>
+    </vixm:TLOF>
+  </vixm:tlofArea>
+</vixm:Vertiport>
+```
+
+### 3. UIXM Collaborative Flight Intent (`uam-flight-intent.json` - UAM FF-ICE)
 ```json
 {
-  "$schema": "https://vixm.aero/schemas/v1.0/uixm-flight-intent.json",
+  "$schema": "[https://vixm.aero/schemas/v1.0/uixm-flight-intent.json](https://vixm.aero/schemas/v1.0/uixm-flight-intent.json)",
   "flightId": "UAM-KR-102",
   "operatorId": "K-AAM-AIR",
   "aircraftType": "S-A2-EVTOL",
@@ -131,6 +160,29 @@ Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Env
     "slotTime": "2026-08-22T11:32:00Z"
   }
 }
+```
+
+### 4. UIXM Flight Intent XML (`uam-flight-intent.xml` - FF-ICE GML/XML Profile)
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<uixm:FlightIntent xmlns:uixm="[http://www.vixm.aero/schema/uixm/1.0](http://www.vixm.aero/schema/uixm/1.0)"
+                   xmlns:gml="[http://www.opengis.net/gml/3.2](http://www.opengis.net/gml/3.2)"
+                   gml:id="FLT-UAM-KR-102">
+  <uixm:flightIdentification>UAM-KR-102</uixm:flightIdentification>
+  <uixm:operatorIdentification>K-AAM-AIR</uixm:operatorIdentification>
+  <uixm:aircraftType>S-A2-EVTOL</uixm:aircraftType>
+  <uixm:departureVertiportRef>ICN-VP-01</uixm:departureVertiportRef>
+  <uixm:arrivalVertiportRef>YBD-VP-03</uixm:arrivalVertiportRef>
+  <uixm:energyProfile>
+    <uixm:departureSOC uom="PERCENT">92.5</uixm:departureSOC>
+    <uixm:estimatedArrivalSOC uom="PERCENT">48.0</uixm:estimatedArrivalSOC>
+    <uixm:minimumReserveSOC uom="PERCENT">20.0</uixm:minimumReserveSOC>
+  </uixm:energyProfile>
+  <uixm:interlockedGroundSlot>
+    <uixm:assignedPadId>TLOF-01</uixm:assignedPadId>
+    <uixm:slotTime>2026-08-22T11:32:00Z</uixm:slotTime>
+  </uixm:interlockedGroundSlot>
+</uixm:FlightIntent>
 ```
 
 ---
