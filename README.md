@@ -1,7 +1,7 @@
 <div align="center">
 
-# VIXM & UIXM Standard Initiative
-**The Open Data Exchange Standards for Vertiports & Urban Air Mobility (AAM/UAM)**
+# The *IXM Framework
+**Unified Data Exchange Standards for UAM Infrastructure (VIXM) & Operations (UIXM)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Standard Draft](https://img.shields.io/badge/Version-v1.0--Draft-cyan.svg)](#)
@@ -13,70 +13,68 @@
 
 ## 📌 Overview
 
-**VIXM (Vertiport Information Exchange Model)** and **UIXM (UAM Flight Information Exchange Model)** are open, global data exchange specifications engineered specifically for Urban Air Mobility (UAM) and Advanced Air Mobility (AAM).
+**The \*IXM Framework** is an open, harmonized data exchange initiative designed specifically for Advanced Air Mobility (AAM) and Urban Air Mobility (UAM).
 
-Traditional aviation relies on **AIXM** (Aeronautical), **FIXM/FF-ICE** (Flight), and **IWXXM** (Weather). However, the ultra-dense, low-altitude, and high-cadence nature of eVTOL operations requires a specialized digital paradigm:
+Traditional aviation interoperability relies on **AIXM** (Aeronautical), **FIXM/FF-ICE** (Flight), and **IWXXM** (Weather). The \*IXM Framework extends this global heritage to meet the high-cadence, low-altitude demands of eVTOL operations across two core pillars:
 
-* **VIXM (Ground Infrastructure)**: Standardizes vertiport physical geometry, dynamic pad/gate availability, and tactical turnaround constraints.
-* **UIXM (Airborne & Flow / UAM FF-ICE)**: Serves as the **"FF-ICE for UAM"**, standardizing 4D corridor trajectories, collaborative flight intent, battery/SOC constraints, and tactical PSU-to-PSU flight plan negotiation.
-
-Together, **VIXM + UIXM** bridge the ground-air divide, delivering end-to-end digital twin synchronization across the entire UAM ecosystem.
+* **VIXM (Vertiport Information Exchange Model)**: Digitalizes ground infrastructure, TLOF/FATO physical bounds, dynamic pad allocation, turnaround timelines, and charger health.
+* **UIXM (UAM Flight Information Exchange Model)**: Functions as the **"FF-ICE for UAM"**, standardizing 4D corridor trajectories, battery/SOC constraints, tactical intent negotiation, and interlocked vertiport slot planning.
 
 ---
 
 ## 🌐 The *IXM Ecosystem Matrix
 
-VIXM and UIXM are designed to operate natively within the global **SWIM (System Wide Information Management)** architecture and UAM Traffic Management (PSU/USS):
+The \*IXM standards operate natively within the global **SWIM (System Wide Information Management)** environment and UAM Traffic Management (PSU/USS) architectures:
 
 | Standard | Domain | Core Focus | Target Systems |
 | :--- | :--- | :--- | :--- |
-| **AIXM** | Aeronautical Information | Airspace Structures, Routes, Traditional Aerodromes | AIS, NOTAM, ATM Providers |
-| **FIXM** | Flight Information (Traditional) | En-route Flight Plans, Traditional 4D Trajectory | ATM, Airline AOC, ICAO FF-ICE |
-| **IWXXM** | Weather Information | Meteorological Forecasts & Observations | MET Services, Dispatchers |
+| **AIXM** | Aeronautical Information | Airspace Structures, Corridors, Traditional Aerodromes | AIS, NOTAM, ATM Providers |
+| **FIXM** | Flight Information (Traditional) | En-route Flight Plans, Trajectory Synchronization | ATM, Airline AOC, ICAO FF-ICE |
+| **IWXXM** | Weather Information | Meteorological Forecasts & Micro-weather Observations | MET Services, Dispatchers |
 | **VIXM** | **Vertiport Information (Ground)** | **TLOF/FATO Geometry, Real-time Slot & Charger State** | **VPO, Fleet Operators, PSU/USS** |
-| **UIXM** | **UAM Flight Information (Air & Flow)** | **UAM-native FF-ICE, Low-Altitude 4D Corridor Intent, SOC-aware Trajectory** | **PSU/USS, eVTOL Fleet Operators, Vertiport Coordinators** |
+| **UIXM** | **UAM Flight Information (Air & Flow)** | **UAM FF-ICE, Low-Altitude 4D Intent, SOC Trajectory** | **PSU/USS, eVTOL Operators, Fleet Hubs** |
 
 ---
 
 ## ✈️ UIXM: The "FF-ICE for UAM" Vision
 
-Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Environment) transformed traditional airline flight planning into dynamic, collaborative 4D trajectory negotiation. 
+Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Environment) transformed airline flight dispatching into collaborative 4D trajectory negotiation. 
 
-**UIXM extends this legacy into low-altitude urban airspace:**
+**UIXM brings this capability to dense urban airspace:**
 
-1. **Corridor-Aware 4D Flight Intent:** Standardized sharing of precision 4D trajectories adapted to urban airspace corridors and dynamic geo-fencing.
-2. **Battery & Energy-Aware Trajectories:** Integration of State-of-Charge (SOC), reserve power thresholds, and weather-impacted climb profiles directly into flight data.
-3. **Tactical Vertiport Slot Interlocking:** Direct synchronization with **VIXM** to ensure that airborne flight plan adjustments automatically reconcile with real-time vertiport TLOF/FATO availability and charging reservations.
-4. **Collaborative PSU/USS Negotiation:** Streamlined machine-to-machine protocols for conflict resolution, tactical rerouting, and dynamic priority handling in multi-operator airspace.
+1. **Corridor-Aware 4D Flight Intent:** Dynamic multi-waypoint trajectories synchronized with urban corridor definitions and airspace geofencing.
+2. **Energy & Battery Profiles:** Integration of State-of-Charge (SOC), reserve margins, and weather-dependent power burn profiles directly into flight data.
+3. **Tactical Slot Interlocking:** Seamless data binding between airborne UIXM trajectories and ground-level VIXM pad/charger reservations.
+4. **Collaborative PSU-to-PSU Coordination:** Machine-to-machine protocols for dynamic rerouting, conflict avoidance, and priority management.
 
 ---
 
 ## 🚀 VIXM Core Features
 
 ### 1. Static Infrastructure Model
-* **Geometric & Physical Bounds:** Precise spatial definitions of TLOF, FATO, Safety Areas, and Obstacle Limitation Surfaces (OLS/OIS).
-* **Vertiport Identification:** Standardized naming, spatial coordinates, geographic elevations, and access corridors.
-* **Ground Facilities:** Gate layouts, passenger boarding bridges, charging pads, and emergency egress routing.
+* **Geometry & Safety Bounds:** Exact spatial layouts of TLOF, FATO, Safety Areas, and Obstacle Limitation Surfaces (OLS/OIS).
+* **Vertiport Master Data:** Universal vertiport identifiers, reference points, elevations, approach corridors, and local operating limits.
+* **Ground Facilities:** Boarding gates, passenger flow paths, charging pads, and emergency support zones.
 
 ### 2. Dynamic Operational Model
-* **Pad & Gate Availability:** Real-time occupancy status, scheduled occupancy windows, and turnaround durations.
-* **Resource Readiness:** EV charging power limits, battery swap station health, fire suppression readiness, and MRO capabilities.
-* **Tactical Restrictions:** Local surface wind threshold exceedances, micro-weather hazards, and temporary operating holds.
+* **Pad & Slot States:** Real-time pad occupancy, allocated flight identification, scheduled turnaround windows, and availability feeds.
+* **Charging & Utility Telemetry:** Charging station status, available kW throughput, battery swap metrics, and MRO service capacity.
+* **Tactical Restrictions:** Local micro-wind alerts, surface hazards, and immediate operational restrictions.
 
-### 3. Interoperability & Architecture
-* **Standard Schemas:** Fully modeled in UML with derived **XML (GML-compliant)** and **JSON Schema** payloads.
-* **API & Event Streaming:** Optimized for modern RESTful, gRPC, and asynchronous event brokers (MQTT/AMQP/Kafka).
+### 3. Interoperability & Schema Design
+* **Schema Profiles:** Unified UML models providing both **XML (GML-compliant)** for SWIM architectures and **JSON Schema** for modern REST/WebSocket/gRPC streams.
+* **Event Broker Ready:** Structured for high-frequency pub/sub networks (MQTT, AMQP, Kafka).
 
 ---
 
 ## 📂 Repository Structure
 
 ```text
-├── docs/                # Architecture specifications, whitepapers, and SWIM integration guides
+├── docs/                # Architecture specifications, SWIM guidelines, and whitepapers
 ├── schemas/             # Formal schema definitions
 │   ├── vixm/            # Vertiport Information Schemas (XSD & JSON)
-│   └── uixm/            # UAM Flight & Flow (FF-ICE) Schemas (XSD & JSON)
-├── examples/            # Sample payloads (Static Vertiport, Dynamic State, 4D Flight Intent)
+│   └── uixm/            # UAM Flight & Flow (UAM FF-ICE) Schemas (XSD & JSON)
+├── examples/            # Sample payloads (Static layouts, dynamic states, flight intents)
 ├── uml/                 # Enterprise Architect / Papyrus UML class models
 └── README.md
 ```
@@ -110,7 +108,7 @@ Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Env
 }
 ```
 
-### 2. VIXM Static Vertiport Geometry (`vertiport-layout.xml` - GML Compliant)
+### 2. VIXM Static Vertiport Geometry (`vertiport-layout.xml`)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <vixm:Vertiport xmlns:vixm="[http://www.vixm.aero/schema/1.0](http://www.vixm.aero/schema/1.0)"
@@ -162,7 +160,7 @@ Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Env
 }
 ```
 
-### 4. UIXM Flight Intent XML (`uam-flight-intent.xml` - FF-ICE GML/XML Profile)
+### 4. UIXM Flight Intent XML (`uam-flight-intent.xml` - GML Profile)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <uixm:FlightIntent xmlns:uixm="[http://www.vixm.aero/schema/uixm/1.0](http://www.vixm.aero/schema/uixm/1.0)"
@@ -189,12 +187,12 @@ Traditional ICAO **FF-ICE** (Flight and Flow Information for a Collaborative Env
 
 ## 🤝 Contributing
 
-Contributions from vertiport operators, PSU/USS developers, eVTOL manufacturers, and aviation regulatory authorities are warmly welcomed:
+Contributions from vertiport developers, PSU/USS operators, eVTOL manufacturers, and aviation regulatory authorities are warmly welcomed:
 
 1. Fork the Repository.
-2. Create your Feature Branch (`git checkout -b feature/UIXM-4D-Corridor`).
+2. Create your Feature Branch (`git checkout -b feature/NewSchemaFeature`).
 3. Commit your Changes (`git commit -m 'feat: Add battery reserve profile to UIXM'`).
-4. Push to the Branch (`git push origin feature/UIXM-4D-Corridor`).
+4. Push to the Branch (`git push origin feature/NewSchemaFeature`).
 5. Open a Pull Request.
 
 ---
