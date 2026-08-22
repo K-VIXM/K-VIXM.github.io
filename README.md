@@ -15,7 +15,7 @@
 
 **VIXM (Vertiport Information Exchange Model)** is an open, standardized information exchange model tailored specifically for Advanced Air Mobility (AAM) and Urban Air Mobility (UAM) ground infrastructures. 
 
-Just as traditional aviation relies on **AIXM** (Aeronautical), **FIXM** (Flight), and **WXXM** (Weather), **VIXM** fills the missing infrastructure-side gap by standardizing the digital representation of vertiport physical layouts, dynamic operational availability, and tactical turnaround constraints.
+Just as traditional aviation relies on **AIXM** (Aeronautical), **FIXM** (Flight), and **IWXXM** (Weather), **VIXM** fills the missing infrastructure-side gap by standardizing the digital representation of vertiport physical layouts, dynamic operational availability, and tactical turnaround constraints.
 
 ---
 
